@@ -1,15 +1,22 @@
-alert('javascript cargado')
 $(document).ready(function() {
-    // Realizar solicitud GET a la API
-    $.get("https://sheetdb.io/api/v1/vr0qpo47pi28j", function(data) {
-      // Manipular los datos recibidos de la API
-      var apiData = "";
-      for (var i = 0; i < data.length; i++) {
-        // Construir una cadena con los datos de la API
-        apiData += "<p>" + data[i].NOMBRE + ": " + data[i].APELLIDO + ": " + data[i].TELF + "</p>";
-      }
-      
-      // Mostrar los datos en el div correspondiente
-      $("#apiData").html(apiData);
-    });
+    // Función para realizar la solicitud GET a la API y mostrar los datos
+    function fetchData() {
+      $.get("https://sheetdb.io/api/v1/7tpl63a7x0ke4", function(data) {
+        var apiData = "<table><thead><tr><th>AEROLINEA</th><th>VUELO</th><th>STA CONCATENADO</th></tr></thead><tbody>";
+    
+        for (var i = 0; i < data.length; i++) {
+          apiData += "<tr><td>" + data[i].AEROLINEA + "</td><td>" + data[i].VUELO + "</td><td>" + data[i]['STA CONCATENADO'] + "</td></tr>";
+        }
+    
+        apiData += "</tbody></table>";
+    
+        $("#apiData").html(apiData);
+      });
+    }
+  
+    // Llamar a fetchData inmediatamente y luego cada 5 segundos
+    fetchData(); // Llamar inmediatamente
+    setInterval(fetchData, 2000); // Llamar cada 5 segundos (5000 milisegundos)
   });
+  
+  
